@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VetClinic.Domain", "VetClin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VetClinic.Infrastructure", "VetClinic.Infrastructure\VetClinic.Infrastructure.csproj", "{1AACD993-1BE8-42D9-9ED5-3C1AB941F49B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VetClinic.Commons", "VetClinic.Commons\VetClinic.Commons.csproj", "{5BCCE998-BECD-4989-A736-A1CA24CD971C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{1AACD993-1BE8-42D9-9ED5-3C1AB941F49B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1AACD993-1BE8-42D9-9ED5-3C1AB941F49B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1AACD993-1BE8-42D9-9ED5-3C1AB941F49B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BCCE998-BECD-4989-A736-A1CA24CD971C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BCCE998-BECD-4989-A736-A1CA24CD971C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BCCE998-BECD-4989-A736-A1CA24CD971C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BCCE998-BECD-4989-A736-A1CA24CD971C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
