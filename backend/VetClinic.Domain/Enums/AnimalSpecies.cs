@@ -4,9 +4,21 @@
     {
         Dog,
         Cat,
-        Hamster,
+        Rabbit,
         GuineaPig,
+        Hamster,
+        Ferret,
+        Rat,
+        Mouse,
+        Bird,
+        Reptile,
+        Amphibian,
+        Fish,
         Horse,
-        Cow
+        Cattle,
+        Pig,
+        Sheep,
+        Goat,
+        Exotic
     }
 }

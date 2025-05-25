@@ -5,8 +5,8 @@ using VetClinic.Domain.Enums;
 
 namespace VetClinic.Domain.Entities
 {
-    [Table("Schema", Schema = "Clinic")]
-    internal class Animal : BaseEntity
+    [Table("Animals", Schema = "Clinic")]
+    public class Animal : BaseEntity
     {
         public Animal() { }
 
