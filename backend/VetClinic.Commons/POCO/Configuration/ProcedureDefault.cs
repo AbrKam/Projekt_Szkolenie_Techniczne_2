@@ -1,10 +1,10 @@
-﻿namespace VetClinic.Commons.Configuration
+﻿namespace VetClinic.Commons.POCO.Configuration
 {
     public class ProcedureDefault
     {
         public ProcedureDefault() { }
 
-        public ProcedureDefault(string code, TimeSpan duration, decimal price) 
+        public ProcedureDefault(string code, TimeSpan duration, decimal price)
         {
             Code = code;
             Duration = duration;
@@ -13,7 +13,7 @@
 
         public string Code { get; set; }
         public TimeSpan Duration { get; set; }
-        public decimal Price {  get; set; }
+        public decimal Price { get; set; }
 
     }
 }

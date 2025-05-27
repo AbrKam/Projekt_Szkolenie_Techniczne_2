@@ -20,13 +20,12 @@ namespace VetClinic.Domain.Entities
             Breed = breed;
         }
 
-        [Required]
-        [StringLength(50)]
+        [Required, MaxLength(50)]
         public string Name { get; protected set; }
         [Range(0, 50)]
         public int Age { get; protected set; }
         public AnimalSpecies Species { get; protected set; }
-        [StringLength(50)]
+        [MaxLength(50)]
         public string Breed { get; protected set; }
         [Required]
         public long OwnerId { get; protected set; }

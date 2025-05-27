@@ -1,11 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using VetClinic.Commons.Entities;
 using VetClinic.Domain.Enums;
 
 namespace VetClinic.Domain.Entities
 {
     [Table("Veterinarians", Schema = "Clinic")]
-    public class Veterinarian
+    public class Veterinarian : BaseEntity
     {
         public Veterinarian() { }
 
@@ -18,17 +19,13 @@ namespace VetClinic.Domain.Entities
             Speciality = speciality;
         }
 
-        [Required]
-        [MaxLength(50)]
+        [Required, MaxLength(50)]
         public string FirstName { get; protected set; }
-        [Required]
-        [MaxLength(50)]
+        [Required, MaxLength(50)]
         public string LastName { get; protected set; }
-        [Required]
-        [MaxLength(256)]
+        [Required, MaxLength(256)]
         public string Email { get; protected set; }
-        [Required]
-        [MaxLength(12)]
+        [Required, MaxLength(12)]
         public string PhoneNumber { get; protected set; }
         public VeterinarianSpeciality Speciality { get; protected set; }
 

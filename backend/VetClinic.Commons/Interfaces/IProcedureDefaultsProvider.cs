@@ -1,4 +1,4 @@
-﻿using VetClinic.Commons.Configuration;
+﻿using VetClinic.Commons.POCO.Configuration;
 
 namespace VetClinic.Commons.Interfaces
 {

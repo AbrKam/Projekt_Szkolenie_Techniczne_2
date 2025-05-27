@@ -17,17 +17,13 @@ namespace VetClinic.Domain.Entities
             PhoneNumber = phoneNumber;
         }
 
-        [Required]
-        [MaxLength(50)]
+        [Required, MaxLength(50)]
         public string FirstName { get; protected set;}
-        [Required]
-        [MaxLength(50)]
+        [Required, MaxLength(50)]
         public string LastName { get; protected set;}
-        [Required]
-        [MaxLength(256)]
+        [Required, MaxLength(256)]
         public string Email { get; protected set;}
-        [Required]
-        [MaxLength(12)]
+        [Required, MaxLength(12)]
         public string PhoneNumber {  get; protected set;}
 
         public ICollection<Animal> Animals { get; protected set;} = new HashSet<Animal>();

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
-using VetClinic.Commons.Configuration;
 using VetClinic.Commons.Interfaces;
+using VetClinic.Commons.POCO.Configuration;
 
 namespace VetClinic.Infrastructure.Configuration
 {

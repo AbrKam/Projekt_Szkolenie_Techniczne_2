@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using VetClinic.Commons.Entities;
 
 namespace VetClinic.Domain.Entities
@@ -18,8 +19,10 @@ namespace VetClinic.Domain.Entities
 
         public string Purpose { get; protected set; }
         public string Description { get; protected set; }
-        public Veterinarian Veterinarian { get; protected set; }
-        public Animal Animal { get; protected set; }
+        [Required] public long VeterinarianId { get; protected set; }
+        [Required] public Veterinarian Veterinarian { get; protected set; }
+        [Required] public long AnimalId { get; protected set; }
+        [Required] public Animal Animal { get; protected set; }
 
         public void SetPurpose(string purpose)
             => Purpose = purpose;
@@ -29,6 +32,5 @@ namespace VetClinic.Domain.Entities
             => Veterinarian = veterinarian;
         public void SetAnimal(Animal animal)
             => Animal = animal;
-
     }
 }
