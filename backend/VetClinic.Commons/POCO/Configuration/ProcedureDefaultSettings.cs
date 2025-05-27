@@ -1,4 +1,4 @@
-﻿namespace VetClinic.Infrastructure.Configuration
+﻿namespace VetClinic.Commons.POCO.Configuration
 {
     public class ProcedureDefaultSettings
     {

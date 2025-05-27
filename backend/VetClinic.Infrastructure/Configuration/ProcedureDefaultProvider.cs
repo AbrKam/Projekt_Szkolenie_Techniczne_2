@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
-using VetClinic.Api.Interfaces;
+using VetClinic.Commons.Configuration;
+using VetClinic.Commons.Interfaces;
 
 namespace VetClinic.Infrastructure.Configuration
 {
@@ -15,6 +16,21 @@ namespace VetClinic.Infrastructure.Configuration
                 .ToDictionary(x => x.Code, StringComparer.OrdinalIgnoreCase);
         }
 
+        public TimeSpan GetDuration(string code)
+            => _map.TryGetValue(code, out ProcedureDefault procedureDefault) 
+            ? procedureDefault.Duration 
+            : _defaultDuration;
 
+        public decimal GetPrice(string code)
+            => _map.TryGetValue(code, out ProcedureDefault procedureDefault) 
+            ? procedureDefault.Price
+            : _defaultPrice;
+
+        public ProcedureDefault Get(string code)
+            => _map.TryGetValue(code, out ProcedureDefault procedureDefault)
+            ? procedureDefault
+            : new ProcedureDefault(code, 
+                _defaultDuration, 
+                _defaultPrice);
     }
 }

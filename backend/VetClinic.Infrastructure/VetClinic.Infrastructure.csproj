@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\VetClinic.Api\VetClinic.Api.csproj" />
+  </ItemGroup>
+
 </Project>

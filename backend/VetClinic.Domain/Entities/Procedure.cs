@@ -8,6 +8,5 @@ namespace VetClinic.Domain.Entities
 
         public string ProcedureName { get; protected set; }
         public double Price { get; protected set; }
-        public 
     }
 }
