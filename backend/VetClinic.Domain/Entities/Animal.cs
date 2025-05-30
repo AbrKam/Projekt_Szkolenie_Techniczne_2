@@ -27,9 +27,9 @@ namespace VetClinic.Domain.Entities
         public AnimalSpecies Species { get; protected set; }
         [MaxLength(50)]
         public string Breed { get; protected set; }
-        [Required]
-        public long OwnerId { get; protected set; }
-        public Owner Owner { get; protected set; }
+
+        [Required] public long OwnerId { get; protected set; }
+        [Required] public Owner Owner { get; protected set; }
 
         public void SetName(string name)
             => Name = name;

@@ -1,6 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Net.Http.Headers;
+using System.Runtime.InteropServices;
 using VetClinic.Commons.Entities;
+using VetClinic.Domain.Enums;
 
 namespace VetClinic.Domain.Entities
 {
@@ -26,7 +29,7 @@ namespace VetClinic.Domain.Entities
         [Required, MaxLength(12)]
         public string PhoneNumber {  get; protected set;}
 
-        public ICollection<Animal> Animals { get; protected set;} = new HashSet<Animal>();
+        public virtual ICollection<Animal> Animals { get; protected set;} = new HashSet<Animal>();
 
         public void SetFirstName(string firstName)
             => FirstName = firstName;
@@ -49,9 +52,21 @@ namespace VetClinic.Domain.Entities
                 : Animals.ToList();
         }
 
-        public void Add(Animal animal) 
+        public void AddAnimal(string name, int age, AnimalSpecies species, string breed)
+            => Animals.Add(new Animal(this, name, age, species, breed));
+        public void UpdateAnimal(long animalId, string newName, int newAge)
         {
-            Animals.Add(animal);
+            Animal animal = GetAnimalById(animalId)
+                ?? throw new NullReferenceException("Animal not found");
+            animal.SetName(newName);
+            animal.SetAge(newAge);
+        }
+
+        public void RemoveAnimal(long animalId)
+        {
+            Animal animal = GetAnimalById(animalId) 
+                ?? throw new NullReferenceException("Animal not found");
+            Animals.Remove(animal);
         }
     }
 }
