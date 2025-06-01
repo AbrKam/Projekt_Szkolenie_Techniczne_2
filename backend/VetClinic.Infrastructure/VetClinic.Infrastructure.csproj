@@ -15,8 +15,4 @@
     <ProjectReference Include="..\VetClinic.Domain\VetClinic.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Repositories\" />
-  </ItemGroup>
-
 </Project>

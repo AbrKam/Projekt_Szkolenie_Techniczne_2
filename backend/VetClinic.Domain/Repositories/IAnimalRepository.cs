@@ -9,6 +9,5 @@ namespace VetClinic.Domain.Repositories
         Task AddAsync(Animal entity);
         Task UpdateAsync(Animal entity);
         Task RemoveAsync(Animal animal);
-    
     }
 }

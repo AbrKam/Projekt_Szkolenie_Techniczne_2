@@ -12,19 +12,14 @@ namespace VetClinic.Infrastructure.Repositories
         public async Task<Veterinarian> GetVeterinarianByIdAsync(long id)
         {
             return await _context.Veterinarians.SingleOrDefaultAsync(x => x.Id == id) 
-                ?? throw new NullReferenceException("Could not find veterinarian based on provided Id");
-        }
-
-        // To chyba do usuniecia bo bez sensu raczej tak kombinowac
-        public async Task<Veterinarian> GetVeterinarianByAppointmentIdAsync(long appointmentId)
-        {
-            return await _context.Appointments.SingleOrDefaultAsync(x => x.Id == appointmentId).Result
-                ?? throw new NullReferenceException("Could not find veterinarian based on provided appointment Id");
+                ?? throw new InvalidOperationException($"Could not find veterinarian based on provided id = {id}");
         }
 
         public async Task<bool> ExistsAsync(string firstName, string lastName)
         {
-            //return _context.Veterinarians.SingleOrDefaultAsync()
+            return await _context.Veterinarians
+                .Where(x => x.FirstName == firstName && x.LastName == lastName)
+                .AnyAsync();
         }
         public async Task AddAsync(Veterinarian vet)
         {

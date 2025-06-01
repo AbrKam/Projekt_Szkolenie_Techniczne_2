@@ -23,6 +23,7 @@ namespace VetClinic.Domain.Entities
         [Required] public Veterinarian Veterinarian { get; protected set; }
         [Required] public long AnimalId { get; protected set; }
         [Required] public Animal Animal { get; protected set; }
+        public ICollection<Procedure> Procedures { get; protected set; } = new HashSet<Procedure>();
 
         public void SetPurpose(string purpose)
             => Purpose = purpose;
