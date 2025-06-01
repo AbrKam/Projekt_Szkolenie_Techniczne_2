@@ -25,6 +25,23 @@ namespace VetClinic.Domain.Entities
         [Required] public Animal Animal { get; protected set; }
         public ICollection<Procedure> Procedures { get; protected set; } = new HashSet<Procedure>();
 
+        public List<Procedure> GetAllProcedures()
+        {
+            return Procedures == null 
+                ? new List<Procedure>() 
+                : Procedures.ToList();
+        }
+
+        public Procedure GetProcedureByCode(string code) 
+        {
+            return Procedures.FirstOrDefault(x => x.ProcedureCode == code) 
+                ?? throw new InvalidOperationException("Could not find procedure with given code");
+        }
+        public void AddProcedure(Procedure procedure)
+        {
+            Procedures.Add(procedure);
+        }
+
         public void SetPurpose(string purpose)
             => Purpose = purpose;
         public void SetDescription(string description)
