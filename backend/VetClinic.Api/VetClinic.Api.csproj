@@ -8,11 +8,17 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.16" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\VetClinic.Commons\VetClinic.Commons.csproj" />
+    <ProjectReference Include="..\VetClinic.Domain\VetClinic.Domain.csproj" />
+    <ProjectReference Include="..\VetClinic.Infrastructure\VetClinic.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

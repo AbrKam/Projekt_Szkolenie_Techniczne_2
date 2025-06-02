@@ -13,10 +13,10 @@ namespace VetClinic.Infrastructure.Database
         public DbSet<Veterinarian> Veterinarians { get; set; }
         public DbSet<Procedure> Procedures { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Server=localhost;Database=cinema;Trusted_Connection=True;",
-                x => x.MigrationsHistoryTable("__EFMigrationHistory", "Clinic"));
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer("Server=localhost;Database=clinic;Trusted_Connection=True;TrustServerCertificate=True;",
+        //        x => x.MigrationsHistoryTable("__EFMigrationHistory", "Clinic"));
+        //}
     }
 }
