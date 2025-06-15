@@ -1,4 +1,4 @@
 ﻿namespace VetClinic.Api.Dtos.Appointment
 {
-    public record CreateAppointementDto();
+    public record CreateAppointmentDto();
 }

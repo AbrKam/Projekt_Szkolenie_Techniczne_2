@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using VetClinic.Domain.Entities;
+using VetClinic.Domain.Enums;
 
 namespace VetClinic.Domain.Query.Dtos
 {
-    internal class AnimalDto
-    {
-    }
+    public sealed record AnimalDto(Owner owner, string name, int age, AnimalSpecies species, string breed);
 }
