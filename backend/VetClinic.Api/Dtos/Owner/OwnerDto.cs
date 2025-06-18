@@ -1,4 +1,11 @@
-﻿namespace VetClinic.Api.Dtos.Owner
+﻿using VetClinic.Api.Dtos.Animal;
+
+namespace VetClinic.Api.Dtos.Owner
 {
-    public record OwnerDto();
+    public record OwnerDto(
+        string FirstName,
+        string LastName,
+        string Email,
+        string PhoneNumber,
+        IEnumerable<AnimalDto> Animals);
 }

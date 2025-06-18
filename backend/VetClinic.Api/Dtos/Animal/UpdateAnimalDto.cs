@@ -1,4 +1,8 @@
 ﻿namespace VetClinic.Api.Dtos.Animal
 {
-    public record UpdateAnimalDto();
+    public record UpdateAnimalDto(
+        string Name,
+        int Age,
+        string Species,
+        string Breed);
 }

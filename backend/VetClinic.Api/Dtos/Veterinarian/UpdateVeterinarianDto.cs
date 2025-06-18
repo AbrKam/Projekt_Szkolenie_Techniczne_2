@@ -1,4 +1,9 @@
 ﻿namespace VetClinic.Api.Dtos.Veterinarian
 {
-    public record UpdateVeterinarianDto();
+    public record UpdateVeterinarianDto(
+        string FirstName,
+        string LastName,
+        string Email,
+        string PhoneNumber,
+        string Speciality);
 }

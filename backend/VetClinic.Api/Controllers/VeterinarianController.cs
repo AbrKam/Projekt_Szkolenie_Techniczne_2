@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal;
 using VetClinic.Api.Dtos.Veterinarian;
 using VetClinic.Domain.Entities;
 using VetClinic.Infrastructure.Repositories;
@@ -36,5 +37,28 @@ namespace VetClinic.Api.Controllers
             return CreatedAtAction(nameof(Get), new { id = result.Id}, result);
         }
 
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Update(long id, UpdateVeterinarianDto veterinarianDto)
+        {
+            var existing = await _repository.GetByIdAsync(id);
+
+            if (existing == null) return NotFound();
+
+            _mapper.Map(veterinarianDto, existing);
+            await _repository.UpdateAsync(existing);
+            var result = _mapper.Map<VeterinarianDto>(existing);
+            return Ok(result);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(long id)
+        {
+            var vet = await _repository.GetByIdAsync(id);
+
+            if (vet == null) return NotFound();
+
+            await _repository.DeleteAsync(vet);
+            return NoContent();
+        }
     }
 }
