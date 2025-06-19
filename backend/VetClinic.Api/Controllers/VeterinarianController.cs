@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal;
 using VetClinic.Api.Dtos.Veterinarian;
 using VetClinic.Domain.Entities;
 using VetClinic.Infrastructure.Repositories;
@@ -24,8 +23,10 @@ namespace VetClinic.Api.Controllers
         public async Task<ActionResult<VeterinarianDto>> Get(long id) 
         {
             var vet = await _repository.GetByIdAsync(id);
-            if (vet == null) { return NotFound();}
-            return _mapper.Map<VeterinarianDto>(vet);
+            if (vet == null) return NotFound();
+            var result = _mapper.Map<VeterinarianDto>(vet);
+
+            return Ok(result);
         }
 
         [HttpPost]
@@ -34,6 +35,7 @@ namespace VetClinic.Api.Controllers
             var entity = _mapper.Map<Veterinarian>(veterinarianDto);
             await _repository.AddAsync(entity);
             var result = _mapper.Map<VeterinarianDto>(entity);
+
             return CreatedAtAction(nameof(Get), new { id = result.Id}, result);
         }
 
@@ -41,12 +43,12 @@ namespace VetClinic.Api.Controllers
         public async Task<ActionResult> Update(long id, UpdateVeterinarianDto veterinarianDto)
         {
             var existing = await _repository.GetByIdAsync(id);
-
             if (existing == null) return NotFound();
 
             _mapper.Map(veterinarianDto, existing);
             await _repository.UpdateAsync(existing);
             var result = _mapper.Map<VeterinarianDto>(existing);
+
             return Ok(result);
         }
 
@@ -54,10 +56,10 @@ namespace VetClinic.Api.Controllers
         public async Task<ActionResult> Delete(long id)
         {
             var vet = await _repository.GetByIdAsync(id);
-
             if (vet == null) return NotFound();
 
             await _repository.DeleteAsync(vet);
+            
             return NoContent();
         }
     }
