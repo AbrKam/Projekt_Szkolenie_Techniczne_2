@@ -11,6 +11,12 @@ namespace VetClinic.Infrastructure.Repositories
 
         public OwnerRepository(ClinicDbContext context) : base(context) { _context = context; }
 
+        public async Task<IEnumerable<Owner>> GetAllAsync()
+        {
+            return await _context.Owners.ToListAsync()
+                ?? throw new InvalidOperationException("Could not get owners list");
+        }
+
         public async Task<Owner> GetOwnerByAnimalIdAsync(long animalId)
         {
             return await _context.Animals

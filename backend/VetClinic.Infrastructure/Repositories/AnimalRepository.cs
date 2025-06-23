@@ -11,7 +11,7 @@ namespace VetClinic.Infrastructure.Repositories
 
         public AnimalRepository(ClinicDbContext context) : base(context) {_context = context;}
 
-        public async Task<IEnumerable<Animal>> GetAllAnimalsAsync()
+        public async Task<IEnumerable<Animal>> GetAllAsync()
         {
             return await _context.Animals.ToListAsync();
         }

@@ -21,12 +21,22 @@ namespace VetClinic.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        private async Task<ActionResult<OwnerDto>> Get(long id)
-        { 
+        public async Task<ActionResult<OwnerDto>> Get(long id)
+        {
             var owner = await _ownerRepository.GetByIdAsync(id);
             if (owner == null) return NotFound();
             var result = _mapper.Map<OwnerDto>(owner);
 
+            return Ok(result);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<OwnerDto>>> GetAll() 
+        {
+            var owners = await _ownerRepository.GetAllAsync();
+            if (owners == null) return Ok(Enumerable.Empty<OwnerDto>());
+            var result = _mapper.Map<IEnumerable<OwnerDto>>(owners);
+            
             return Ok(result);
         }
 

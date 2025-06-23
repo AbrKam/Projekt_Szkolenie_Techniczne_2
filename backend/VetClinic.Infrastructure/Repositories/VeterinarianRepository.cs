@@ -11,6 +11,12 @@ namespace VetClinic.Infrastructure.Repositories
 
         public VeterinarianRepository(ClinicDbContext context) : base(context) { _context = context; }
 
+        public async Task<IEnumerable<Veterinarian>> GetAllAsync()
+        {
+            return await _context.Veterinarians.ToListAsync()
+                ?? throw new InvalidOperationException("Could not get veterinarians list");
+        }
+
         public async Task<bool> ExistsAsync(string firstName, string lastName)
         {
             return await _context.Veterinarians

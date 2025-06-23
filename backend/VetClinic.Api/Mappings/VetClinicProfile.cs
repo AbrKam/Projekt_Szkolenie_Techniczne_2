@@ -14,18 +14,23 @@ namespace VetClinic.Api.Mappings
             CreateMap<Animal, AnimalDto>();
             CreateMap<CreateAnimalDto, Animal>();
             CreateMap<UpdateAnimalDto, Animal>();
+            CreateMap<IEnumerable<AnimalDto>, IEnumerable<Animal>>();    
 
             CreateMap<Appointment, AppointmentDto>();
             CreateMap<CreateAppointmentDto, Appointment>();
             CreateMap<UpdateAppointmentDto, Appointment>();
+            CreateMap<IEnumerable<AppointmentDto>, IEnumerable<Appointment>>();
 
             CreateMap<Owner, OwnerDto>();
             CreateMap<CreateOwnerDto, Owner>();
             CreateMap<UpdateOwnerDto, Owner>();
+            CreateMap<IEnumerable<OwnerDto>, IEnumerable<Owner>>();
 
             CreateMap<Veterinarian, VeterinarianDto>();
             CreateMap<CreateVeterinarianDto, Veterinarian>();
             CreateMap<UpdateVeterinarianDto, Veterinarian>();
+            CreateMap<IEnumerable<VeterinarianDto>, IEnumerable<Veterinarian>>();
+
         }
     }
 }

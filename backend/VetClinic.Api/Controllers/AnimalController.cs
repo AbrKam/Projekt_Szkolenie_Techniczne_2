@@ -30,6 +30,13 @@ namespace VetClinic.Api.Controllers
             return Ok(result);
         }
 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<AnimalDto>>> GetAll()
+        {
+            var animals = await _animalRepository.GetAllAsync();
+            if (animals == null) return Ok();
+        }
+
         [HttpPost]
         public async Task<ActionResult> Create(CreateAnimalDto createAnimalDto)
         {

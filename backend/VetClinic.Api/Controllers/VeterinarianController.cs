@@ -29,6 +29,16 @@ namespace VetClinic.Api.Controllers
             return Ok(result);
         }
 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<VeterinarianDto>>> GetAll()
+        {
+            var veterinarians = await _repository.GetAllAsync();
+            if (veterinarians == null) return Ok(Enumerable.Empty<VeterinarianDto>());
+            var result = _mapper.Map<IEnumerable<VeterinarianDto>>(veterinarians);
+
+            return Ok(result);
+        }
+
         [HttpPost]
         public async Task<ActionResult<VeterinarianDto>> Create(CreateVeterinarianDto veterinarianDto)
         {

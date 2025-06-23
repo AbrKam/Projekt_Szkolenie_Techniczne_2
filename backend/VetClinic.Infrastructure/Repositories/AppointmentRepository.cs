@@ -11,6 +11,12 @@ namespace VetClinic.Infrastructure.Repositories
 
         public AppointmentRepository(ClinicDbContext context) : base(context) { _context = context;}
 
+        public async Task<IEnumerable<Appointment>> GetAllAsync()
+        {
+            return await _context.Appointments.ToListAsync()
+                ?? throw new InvalidOperationException("Could not get appointment list");
+        }
+
         public async Task<Animal> GetAnimalByAppointmentIdAsync(long id) 
         {
             return await _context.Appointments
