@@ -1,9 +1,10 @@
 ﻿namespace VetClinic.Api.Dtos.Procedure
 {
-    public sealed record ProcedureDto(
-        string ProcedureCode, 
-        decimal Price, 
-        TimeSpan EstimatedDuration, 
-        long VetId, 
-        long AnimalId);
+    public class ProcedureDto
+    {
+        public long Id { get; set; }
+        public string ProcedureCode { get; set; }
+        public decimal Price { get; set; }
+        public TimeSpan EstimatedTime { get; set; }
+    }
 }

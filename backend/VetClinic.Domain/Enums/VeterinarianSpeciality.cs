@@ -18,6 +18,7 @@
         DiagnosticImaging,
         EquineMedicine,
         EmergencyAndCriticalCare,
+        General,
         HoneyBeeMedicine,
         FelineMedicine,
         VeterinaryImmunology,

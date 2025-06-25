@@ -17,6 +17,18 @@ namespace VetClinic.Infrastructure.Repositories
                 ?? throw new InvalidOperationException("Could not get owners list");
         }
 
+        public async Task<Owner> GetWithAnimalsByIdAsync(long id)
+        {
+            var owner = await _context.Owners
+                .Include(o => o.Animals)
+                .SingleOrDefaultAsync(o => o.Id == id);
+
+            if (owner == null)
+                throw new InvalidOperationException($"Owner {id} not found.");
+
+            return owner;
+        }
+
         public async Task<Owner> GetOwnerByAnimalIdAsync(long animalId)
         {
             return await _context.Animals

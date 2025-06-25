@@ -1,8 +1,10 @@
-﻿namespace VetClinic.Api.Dtos.Animal
+﻿using VetClinic.Domain.Enums;
+
+namespace VetClinic.Api.Dtos.Animal
 {
     public record UpdateAnimalDto(
         string Name,
         int Age,
-        string Species,
+        AnimalSpecies Species,
         string Breed);
 }

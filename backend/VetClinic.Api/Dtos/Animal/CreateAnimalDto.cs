@@ -1,9 +1,11 @@
-﻿namespace VetClinic.Api.Dtos.Animal
+﻿using VetClinic.Domain.Enums;
+
+namespace VetClinic.Api.Dtos.Animal
 {
     public record CreateAnimalDto(
         long OwnerId,
         string Name,
         int Age,
-        string Species,
+        AnimalSpecies Species,
         string Breed);
 }

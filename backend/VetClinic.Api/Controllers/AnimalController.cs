@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using VetClinic.Api.Dtos.Animal;
 using VetClinic.Domain.Entities;
-using VetClinic.Infrastructure.Repositories;
+using VetClinic.Domain.Repositories;
 
 namespace VetClinic.Api.Controllers
 {
@@ -10,10 +10,10 @@ namespace VetClinic.Api.Controllers
     [Route("api/animals")]
     public class AnimalController : ControllerBase
     {
-        private readonly AnimalRepository _animalRepository;
+        private readonly IAnimalRepository _animalRepository;
         private readonly IMapper _mapper;
 
-        public AnimalController(AnimalRepository animalRepository, IMapper mapper) 
+        public AnimalController(IAnimalRepository animalRepository, IMapper mapper) 
         {
             _animalRepository = animalRepository;
             _mapper = mapper;
@@ -24,7 +24,6 @@ namespace VetClinic.Api.Controllers
         {
             var animal = await _animalRepository.GetByIdAsync(id);
             if (animal == null) return NotFound();
-
             var result = _mapper.Map<AnimalDto>(animal);
 
             return Ok(result);
@@ -34,7 +33,10 @@ namespace VetClinic.Api.Controllers
         public async Task<ActionResult<IEnumerable<AnimalDto>>> GetAll()
         {
             var animals = await _animalRepository.GetAllAsync();
-            if (animals == null) return Ok();
+            if (animals == null) return Ok(Enumerable.Empty<AnimalDto>());
+            var result = _mapper.Map<IEnumerable<AnimalDto>>(animals);
+
+            return Ok(result);
         }
 
         [HttpPost]
@@ -46,7 +48,7 @@ namespace VetClinic.Api.Controllers
             await _animalRepository.AddAsync(animal);
             var result = _mapper.Map<AnimalDto>(animal);
 
-            return CreatedAtAction(nameof(result), new {id =  result.Id}, result);
+            return CreatedAtAction(nameof(Get), new {id =  result.Id}, result);
         }
 
         [HttpPut("{id}")]

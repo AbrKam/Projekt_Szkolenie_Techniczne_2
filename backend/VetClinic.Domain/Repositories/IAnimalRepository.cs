@@ -2,7 +2,7 @@
 
 namespace VetClinic.Domain.Repositories
 {
-    public interface IAnimalRepository
+    public interface IAnimalRepository : IRepository<Animal>
     {
         Task<IEnumerable<Animal>> GetAllAsync();
     }

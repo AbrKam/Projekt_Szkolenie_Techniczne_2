@@ -43,6 +43,7 @@ export interface AppointmentDto {
   vetId: number
   animalId: number
   procedureIds: number[]
+  date: string
 }
 
 export interface CreateAppointmentDto {
@@ -52,6 +53,21 @@ export interface CreateAppointmentDto {
   animalId: number
   procedureIds: number[]
 }
+
+export interface VeterinarianDto {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  speciality: string;
+}
+
+export const getAllVeterinarians = () =>
+  api.get<VeterinarianDto[]>('/veterinarians');
+
+export interface ProcedureDto { id: number; procedureCode: string; price: number; estimatedTime: string; }
+export const getAllProcedures = () => api.get<ProcedureDto[]>('/procedures');
 
 export const getAllAppointments = () =>
   api.get<AppointmentDto[]>('/appointments')

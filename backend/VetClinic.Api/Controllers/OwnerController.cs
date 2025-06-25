@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics.Eventing.Reader;
 using VetClinic.Api.Dtos.Owner;
 using VetClinic.Domain.Entities;
-using VetClinic.Infrastructure.Repositories;
+using VetClinic.Domain.Repositories;
+
 
 namespace VetClinic.Api.Controllers
 {
@@ -11,10 +11,10 @@ namespace VetClinic.Api.Controllers
     [Route("api/owners")]
     public class OwnerController : ControllerBase
     {
-        private readonly OwnerRepository _ownerRepository;
+        private readonly IOwnerRepository _ownerRepository;
         private readonly IMapper _mapper;
 
-        public OwnerController(OwnerRepository ownerRepository, IMapper mapper)
+        public OwnerController(IOwnerRepository ownerRepository, IMapper mapper)
         {
             _ownerRepository = ownerRepository;
             _mapper = mapper;

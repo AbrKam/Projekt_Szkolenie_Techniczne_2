@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using VetClinic.Api.Dtos.Appointment;
 using VetClinic.Domain.Entities;
-using VetClinic.Infrastructure.Repositories;
+using VetClinic.Domain.Repositories;
 
 namespace VetClinic.Api.Controllers
 {
@@ -10,69 +10,129 @@ namespace VetClinic.Api.Controllers
     [Route("api/appointments")]
     public class AppointmentController : ControllerBase
     {
-        private readonly AppointmentRepository _appointmentRepository;
+
+        private readonly IAppointmentRepository _appointmentRepository;
+        private readonly IAnimalRepository _animalRepository;
+        private readonly IVeterinarianRepository _veterinarianRepository;
+        private readonly IProcedureRepository _procedureRepository;
         private readonly IMapper _mapper;
 
-        public AppointmentController(AppointmentRepository appointmentRepository, IMapper mapper)
+        public AppointmentController(
+            IAppointmentRepository appointmentRepository,
+            IAnimalRepository animalRepository,
+            IVeterinarianRepository veterinarianRepository,
+            IProcedureRepository procedureRepository,
+            IMapper mapper)
         {
             _appointmentRepository = appointmentRepository;
+            _animalRepository = animalRepository;
+            _veterinarianRepository = veterinarianRepository;
+            _procedureRepository = procedureRepository;
             _mapper = mapper;
-        }
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<AppointmentDto>> Get(long id)
-        {
-            var appointment = await _appointmentRepository.GetByIdAsync(id);
-            if (appointment == null) return NotFound();
-            var result = _mapper.Map<AppointmentDto>(appointment);
-
-            return Ok(result);
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AppointmentDto>>> GetAll()
         {
-            var appointments = await _appointmentRepository.GetAllAsync();
-            if (appointments == null) return Ok(Enumerable.Empty<AppointmentDto>());
-            var result = _mapper.Map<IEnumerable<AppointmentDto>>(appointments);
+            var appointmentEntities = await _appointmentRepository.GetAllAsync();
+            var appointmentDtos = _mapper.Map<IEnumerable<AppointmentDto>>(appointmentEntities);
+            return Ok(appointmentDtos);
+        }
 
-            return Ok(result);
+        [HttpGet("{id}", Name = "GetAppointmentById")]
+        public async Task<ActionResult<AppointmentDto>> GetById(long id)
+        {
+            var appointmentEntity = await _appointmentRepository.GetByIdAsync(id);
+            if (appointmentEntity == null)
+                return NotFound();
+
+            var appointmentDto = _mapper.Map<AppointmentDto>(appointmentEntity);
+            return Ok(appointmentDto);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(CreateAppointmentDto createAppointmentDto)
+        public async Task<ActionResult<AppointmentDto>> Create([FromBody] CreateAppointmentDto createAppointmentDto)
         {
-            var appointment = _mapper.Map<Appointment>(createAppointmentDto);
-            if(appointment == null) return NotFound();
-            await _appointmentRepository.AddAsync(appointment);
-            var result = _mapper.Map<AppointmentDto>(appointment);
+            if (!ModelState.IsValid)
+                return ValidationProblem(ModelState);
 
-            return CreatedAtAction(nameof(Get), new {id = result.Id}, result);
+            var animalEntity = await _animalRepository.GetByIdAsync(createAppointmentDto.AnimalId);
+            var veterinarianEntity = await _veterinarianRepository.GetByIdAsync(createAppointmentDto.VeterinarianId);
+
+            var appointmentEntity = new Appointment(
+                createAppointmentDto.Purpose,
+                createAppointmentDto.Description,
+                veterinarianEntity,
+                animalEntity);
+
+            if (createAppointmentDto.ProcedureIds != null)
+            {
+                foreach (var procedureId in createAppointmentDto.ProcedureIds)
+                {
+                    var procedureEntity = await _procedureRepository.GetByIdAsync(procedureId);
+                    appointmentEntity.AddProcedure(procedureEntity);
+                }
+            }
+
+            await _appointmentRepository.AddAsync(appointmentEntity);
+
+            var appointmentDto = _mapper.Map<AppointmentDto>(appointmentEntity);
+            return CreatedAtRoute(
+                routeName: "GetAppointmentById",
+                routeValues: new { id = appointmentDto.Id },
+                value: appointmentDto);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<AppointmentDto>> Update(long id, UpdateAppointmentDto updateAppointmentDto)
+        public async Task<ActionResult<AppointmentDto>> Update(long id, [FromBody] UpdateAppointmentDto updateAppointmentDto)
         {
-            var existing = await _appointmentRepository.GetByIdAsync(id);
-            if (existing == null) return NotFound();
-           
-            _mapper.Map(updateAppointmentDto, existing);
-            await _appointmentRepository.UpdateAsync(existing);
-            var result = _mapper.Map<AppointmentDto>(existing);
+            if (!ModelState.IsValid)
+                return ValidationProblem(ModelState);
 
-            return Ok(result);
+            var existingAppointment = await _appointmentRepository.GetByIdAsync(id);
+            if (existingAppointment == null)
+                return NotFound();
+
+            existingAppointment.SetPurpose(updateAppointmentDto.Purpose);
+            existingAppointment.SetDescription(updateAppointmentDto.Description);
+
+            if (existingAppointment.AnimalId != updateAppointmentDto.AnimalId)
+            {
+                var newAnimal = await _animalRepository.GetByIdAsync(updateAppointmentDto.AnimalId);
+                existingAppointment.SetAnimal(newAnimal);
+            }
+            if (existingAppointment.VeterinarianId != updateAppointmentDto.VeterinarianId)
+            {
+                var newVet = await _veterinarianRepository.GetByIdAsync(updateAppointmentDto.VeterinarianId);
+                existingAppointment.SetVeterinarian(newVet);
+            }
+
+            existingAppointment.GetAllProcedures().ToList()
+                .ForEach(p => existingAppointment.Procedures.Remove(p));
+            if (updateAppointmentDto.ProcedureIds != null)
+            {
+                foreach (var procedureId in updateAppointmentDto.ProcedureIds)
+                {
+                    var procedureEntity = await _procedureRepository.GetByIdAsync(procedureId);
+                    existingAppointment.AddProcedure(procedureEntity);
+                }
+            }
+
+            await _appointmentRepository.UpdateAsync(existingAppointment);
+
+            var appointmentDto = _mapper.Map<AppointmentDto>(existingAppointment);
+            return Ok(appointmentDto);
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(long id)
+        public async Task<IActionResult> Delete(long id)
         {
-            var appointment = await _appointmentRepository.GetByIdAsync(id);
-            if (appointment == null) return NotFound();
-            
-            await _appointmentRepository.DeleteAsync(appointment);
-            
+            var appointmentEntity = await _appointmentRepository.GetByIdAsync(id);
+            if (appointmentEntity == null)
+                return NotFound();
+
+            await _appointmentRepository.DeleteAsync(appointmentEntity);
             return NoContent();
         }
-
     }
 }

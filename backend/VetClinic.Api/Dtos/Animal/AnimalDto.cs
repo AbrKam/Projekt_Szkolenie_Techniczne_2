@@ -7,6 +7,6 @@ namespace VetClinic.Api.Dtos.Animal
         long OwnerId, 
         string Name, 
         int Age, 
-        string Species, 
+        AnimalSpecies Species, 
         string Breed);
 }

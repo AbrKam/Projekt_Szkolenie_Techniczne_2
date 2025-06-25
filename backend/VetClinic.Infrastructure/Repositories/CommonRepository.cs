@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using VetClinic.Domain.Entities;
 using VetClinic.Domain.Repositories;
 using VetClinic.Infrastructure.Database;
 
@@ -16,7 +15,7 @@ namespace VetClinic.Infrastructure.Repositories
             _dbSet = context.Set<T>();
         }
 
-        public async Task<T> GetByIdAsync(long id)
+        public virtual async Task<T> GetByIdAsync(long id)
         {
             return await _dbSet.FindAsync(id)
                 ?? throw new InvalidOperationException($"Could not find {nameof(T)} based on provided id = {id}");

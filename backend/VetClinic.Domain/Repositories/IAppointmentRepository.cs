@@ -2,7 +2,7 @@
 
 namespace VetClinic.Domain.Repositories
 {
-    public interface IAppointmentRepository
+    public interface IAppointmentRepository : IRepository<Appointment>
     {
         Task<IEnumerable<Appointment>> GetAllAsync();
         Task<Animal> GetAnimalByAppointmentIdAsync(long id);

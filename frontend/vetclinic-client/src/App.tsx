@@ -1,15 +1,17 @@
 import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter as Router } from 'react-router-dom';
 import Header from './components/Header';
-import Footer from './components/Footer'
+import Footer from './components/Footer';
+import AppRoutes from './routes/AppRoutes';
 
-function App() {
-  return(
+const App: React.FC = () => {
+  return (
     <>
-      <Header/>
-      <Footer/>
+      <Header />
+      <AppRoutes />
+      <Footer />
     </>
   );
-}
+};
 
 export default App;

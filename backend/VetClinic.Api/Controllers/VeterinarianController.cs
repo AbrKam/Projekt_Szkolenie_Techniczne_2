@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using VetClinic.Api.Dtos.Veterinarian;
 using VetClinic.Domain.Entities;
-using VetClinic.Infrastructure.Repositories;
+using VetClinic.Domain.Repositories;
 
 namespace VetClinic.Api.Controllers
 {
@@ -10,10 +10,10 @@ namespace VetClinic.Api.Controllers
     [Route("api/veterinarians")]
     public class VeterinarianController : ControllerBase
     {
-        private readonly VeterinarianRepository _repository;
+        private readonly IVeterinarianRepository _repository;
         private readonly IMapper _mapper;
 
-        public VeterinarianController(VeterinarianRepository repo, IMapper mapper) 
+        public VeterinarianController(IVeterinarianRepository repo, IMapper mapper) 
         {
             _repository = repo;
             _mapper = mapper;

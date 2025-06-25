@@ -4,6 +4,7 @@ using VetClinic.Api.Dtos.Animal;
 using VetClinic.Api.Dtos.Appointment;
 using VetClinic.Api.Dtos.Owner;
 using VetClinic.Api.Dtos.Veterinarian;
+using VetClinic.Api.Dtos.Procedure;
 
 namespace VetClinic.Api.Mappings
 {
@@ -20,6 +21,11 @@ namespace VetClinic.Api.Mappings
             CreateMap<CreateAppointmentDto, Appointment>();
             CreateMap<UpdateAppointmentDto, Appointment>();
             CreateMap<IEnumerable<AppointmentDto>, IEnumerable<Appointment>>();
+            CreateMap<Appointment, AppointmentDto>()
+                .ForMember(d => d.AnimalId, o => o.MapFrom(s => s.AnimalId))
+                .ForMember(d => d.VeterinarianId, o => o.MapFrom(s => s.VeterinarianId))
+                .ForMember(d => d.CreatedOn, o => o.MapFrom(s => s.CreatedOn))
+                .ForMember(d => d.ProcedureIds, o => o.MapFrom(s => s.Procedures.Select(p => p.Id)));
 
             CreateMap<Owner, OwnerDto>();
             CreateMap<CreateOwnerDto, Owner>();
@@ -31,6 +37,8 @@ namespace VetClinic.Api.Mappings
             CreateMap<UpdateVeterinarianDto, Veterinarian>();
             CreateMap<IEnumerable<VeterinarianDto>, IEnumerable<Veterinarian>>();
 
+            CreateMap<Procedure, ProcedureDto>()
+                .ForMember(d => d.EstimatedTime, opt => opt.MapFrom(s => s.EstimatedTime));
         }
     }
 }

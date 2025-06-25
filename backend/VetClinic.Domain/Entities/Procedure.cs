@@ -6,7 +6,7 @@ namespace VetClinic.Domain.Entities
     public class Procedure : BaseEntity
     {
         private Procedure() { }
-        internal Procedure(string procedureCode, decimal price, TimeSpan estimatedDuration, Veterinarian veterinarian, Animal animal)
+        public Procedure(string procedureCode, decimal price, TimeSpan estimatedDuration, Veterinarian veterinarian, Animal animal)
         {
             ProcedureCode = procedureCode;
             Price = price;
